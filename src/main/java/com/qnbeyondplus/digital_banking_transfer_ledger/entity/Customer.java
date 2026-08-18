@@ -30,11 +30,9 @@ public class Customer {
     @Column(nullable = false)
     private String passwordHash;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private LocalDateTime createdAt;
-
-    @Column(nullable = false)
-    private LocalDateTime updatedAt;
+    private CustomerStatus status = CustomerStatus.ACTIVE;
 
     @OneToMany(mappedBy = "customer")
     @JsonManagedReference

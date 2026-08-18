@@ -1,6 +1,7 @@
 package com.qnbeyondplus.digital_banking_transfer_ledger.controller;
 
 import com.qnbeyondplus.digital_banking_transfer_ledger.dto.CustomerRequest;
+import com.qnbeyondplus.digital_banking_transfer_ledger.dto.CustomerResponse;
 import com.qnbeyondplus.digital_banking_transfer_ledger.entity.Customer;
 import com.qnbeyondplus.digital_banking_transfer_ledger.service.CustomerService;
 import org.junit.jupiter.api.Test;
@@ -36,12 +37,16 @@ class CustomerControllerTest {
                 .thenReturn(List.of(customer));
 
         // Act
-        List<Customer> result = customerController.getAllCustomers();
+        List<CustomerResponse> result =
+                customerController.getAllCustomers();
 
         // Assert
         assertNotNull(result);
         assertEquals(1, result.size());
-        assertEquals("John Doe", result.get(0).getFullName());
+        assertEquals(
+                "John Doe",
+                result.get(0).getFullName()
+        );
     }
 
     @Test
@@ -56,12 +61,19 @@ class CustomerControllerTest {
                 .thenReturn(customer);
 
         // Act
-        Customer result = customerController.getCustomerById(1L);
+        CustomerResponse result =
+                customerController.getCustomerById(1L);
 
         // Assert
         assertNotNull(result);
-        assertEquals("John Doe", result.getFullName());
-        assertEquals("john@example.com", result.getEmail());
+        assertEquals(
+                "John Doe",
+                result.getFullName()
+        );
+        assertEquals(
+                "john@example.com",
+                result.getEmail()
+        );
     }
 
     @Test
@@ -69,29 +81,40 @@ class CustomerControllerTest {
 
         // Arrange
         CustomerRequest request = new CustomerRequest();
+
         request.setFullName("John Doe");
         request.setEmail("john@example.com");
         request.setPhone("01012345678");
+        request.setPassword("John@123");
 
         Customer savedCustomer = new Customer();
+
         savedCustomer.setFullName("John Doe");
         savedCustomer.setEmail("john@example.com");
         savedCustomer.setPhone("01012345678");
 
         when(customerService.createCustomer(
-        any(Customer.class),
-        any(String.class)
-))
-        .thenReturn(savedCustomer);
-        request.setPassword("John@123");
+                any(Customer.class),
+                any(String.class)
+        )).thenReturn(savedCustomer);
 
         // Act
-        Customer result = customerController.createCustomer(request);
+        CustomerResponse result =
+                customerController.createCustomer(request);
 
         // Assert
         assertNotNull(result);
-        assertEquals("John Doe", result.getFullName());
-        assertEquals("john@example.com", result.getEmail());
-        assertEquals("01012345678", result.getPhone());
+        assertEquals(
+                "John Doe",
+                result.getFullName()
+        );
+        assertEquals(
+                "john@example.com",
+                result.getEmail()
+        );
+        assertEquals(
+                "01012345678",
+                result.getPhone()
+        );
     }
 }

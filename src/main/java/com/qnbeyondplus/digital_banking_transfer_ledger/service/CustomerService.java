@@ -5,8 +5,6 @@ import com.qnbeyondplus.digital_banking_transfer_ledger.exception.DuplicateCusto
 import com.qnbeyondplus.digital_banking_transfer_ledger.repository.CustomerRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,12 +39,7 @@ public class CustomerService {
             throw new DuplicateCustomerException(errors);
         }
 
-        LocalDateTime now = LocalDateTime.now();
-
         customer.setPasswordHash(passwordEncoder.encode(password));
-
-        customer.setCreatedAt(now);
-        customer.setUpdatedAt(now);
 
         return customerRepository.save(customer);
     }
